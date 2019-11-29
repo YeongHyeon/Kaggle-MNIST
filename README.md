@@ -11,9 +11,10 @@ The source code for <a href="https://www.kaggle.com/c/digit-recognizer">Digit Re
 
 ## Performance
 The performance of this deep neural network is 0.99871. This is the 122th of 2270 teams (top 6%) as of November 29, 2019.
+
 <div align="center">
   <img src="./figures/performance.png" width="750">  
-  <p>The performance measured by<a href="https://www.kaggle.com/c/digit-recognizer/leaderboard">Kaggle</a>.</p>
+  <p>The performance measured by <a href="https://www.kaggle.com/c/digit-recognizer/leaderboard">Kaggle</a>.</p>
 </div>
 
 ## Reference
