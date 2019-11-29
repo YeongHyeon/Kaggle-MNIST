@@ -1,10 +1,7 @@
-import os, inspect, time, math
+import os, inspect
 
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
-
-from sklearn.decomposition import PCA
 
 PACK_PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))+"/.."
 
@@ -14,7 +11,6 @@ def training(sess, saver, neuralnet, dataset, epochs, batch_size, normalize=True
 
     summary_writer = tf.compat.v1.summary.FileWriter(PACK_PATH+'/Checkpoint', sess.graph)
 
-    start_time = time.time()
     iteration = 0
 
     run_options = tf.compat.v1.RunOptions(trace_level=tf.compat.v1.RunOptions.FULL_TRACE)
@@ -51,7 +47,7 @@ def test(sess, saver, neuralnet, dataset, batch_size):
     print("\nTest...")
 
     fsubmit = open("submission.csv", "w")
-    fsubmit.write("ImageId, Label\n")
+    fsubmit.write("ImageId,Label\n")
     cntid = 1
 
     confusion_matrix = np.zeros((dataset.num_class, dataset.num_class), np.int32)
@@ -63,28 +59,7 @@ def test(sess, saver, neuralnet, dataset, batch_size):
         label, logit = np.argmax(y_te[0]), np.argmax(class_score)
         confusion_matrix[label, logit] += 1
 
-        fsubmit.write("%d, %d\n" %(cntid, logit))
+        fsubmit.write("%d,%d\n" %(cntid, logit))
 
         if(terminator): break
     fsubmit.close()
-
-    # print("\nConfusion Matrix")
-    # print(confusion_matrix)
-    #
-    # tot_precision, tot_recall, tot_f1score = 0, 0, 0
-    # diagonal = 0
-    # for idx_c in range(dataset.num_class):
-    #     precision = confusion_matrix[idx_c, idx_c] / np.sum(confusion_matrix[:, idx_c])
-    #     recall = confusion_matrix[idx_c, idx_c] / np.sum(confusion_matrix[idx_c, :])
-    #     f1socre = 2 * (precision * recall / (precision + recall))
-    #
-    #     tot_precision += precision
-    #     tot_recall += recall
-    #     tot_f1score += f1socre
-    #     diagonal += confusion_matrix[idx_c, idx_c]
-    #     print("Class-%d | Precision: %.3f, Recall: %.3f, F1-Score: %.3f" \
-    #         %(idx_c, precision, recall, f1socre))
-    #
-    # accuracy = diagonal / np.sum(confusion_matrix)
-    # print("\nTotal | Accuracy: %.3f, Precision: %.3f, Recall: %.3f, F1-Score: %.3f" \
-    #     %(accuracy, tot_precision/dataset.num_class, tot_recall/dataset.num_class, tot_f1score/dataset.num_class))

@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf
 
 from sklearn.utils import shuffle
 
@@ -11,31 +10,26 @@ class Dataset(object):
 
         self.normalize = normalize
 
-        (x_tr, y_tr), (x_te, y_te) = tf.keras.datasets.mnist.load_data()
-        self.x_tr, self.y_tr = x_tr, y_tr
-        # self.x_tr, self.y_tr = None, None
-        # self.x_te, self.y_te = x_te, y_te
+        self.x_tr, self.y_tr = None, None
         self.x_te, self.y_te = None, None
 
-        # ftr = open("train.csv", "r")
-        # # contents = ftr.readlines()
-        # while(True):
-        #     content = ftr.readline()
-        #     if not content: break
-        #     if("pixel" in content): continue
-        #     tmp_label = content.replace("\n", "").split(",")[0]
-        #     tmp_data = np.reshape(np.asarray(content.replace("\n", "").split(",")[1:]), (1, 28, 28))
-        #     if(self.y_tr is None):
-        #         self.y_tr = tmp_label
-        #         self.x_tr = tmp_data
-        #     else:
-        #         self.y_tr = np.append(self.y_tr, tmp_label)
-        #         self.x_tr = np.append(self.x_tr, tmp_data, axis=0)
-        #         print(self.x_tr.shape, self.y_tr.shape)
-        # ftr.close()
+        ftr = open("train.csv", "r")
+        while(True):
+            content = ftr.readline()
+            if not content: break
+            if("pixel" in content): continue
+            tmp_label = content.replace("\n", "").split(",")[0]
+            tmp_data = np.reshape(np.asarray(content.replace("\n", "").split(",")[1:]), (1, 28, 28))
+            if(self.y_tr is None):
+                self.y_tr = tmp_label
+                self.x_tr = tmp_data
+            else:
+                self.y_tr = np.append(self.y_tr, tmp_label)
+                self.x_tr = np.append(self.x_tr, tmp_data, axis=0)
+                print(self.x_tr.shape, self.y_tr.shape)
+        ftr.close()
 
         fte = open("test.csv", "r")
-        # contents = fte.readlines()
         while(True):
             content = fte.readline()
             if not content: break

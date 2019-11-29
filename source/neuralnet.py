@@ -21,7 +21,6 @@ class SENet(object):
         self.smce = tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits=self.y_hat)
         self.loss = tf.compat.v1.reduce_mean(self.smce)
 
-        #default: beta1=0.9, beta2=0.999
         self.optimizer = tf.compat.v1.train.AdamOptimizer( \
             self.leaning_rate, beta1=0.9, beta2=0.999).minimize(self.loss)
 
@@ -134,8 +133,6 @@ class SENet(object):
     def conv2d(self, input, stride, padding, \
         filter_size=[3, 3, 16, 32], dilations=[1, 1, 1, 1], activation="relu", name=""):
 
-        # strides=[N, H, W, C], [1, stride, stride, 1]
-        # filter_size=[ksize, ksize, num_inputs, num_outputs]
         self.weights, self.w_names, weight = self.variable_maker(var_bank=self.weights, name_bank=self.w_names, \
             shape=filter_size, name='%s_w' %(name))
         self.biasis, self.b_names, bias = self.variable_maker(var_bank=self.biasis, name_bank=self.b_names, \
