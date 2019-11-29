@@ -17,25 +17,29 @@ class Dataset(object):
         # self.x_te, self.y_te = x_te, y_te
         self.x_te, self.y_te = None, None
 
-        ftr = open("train.csv", "r")
-        contents = ftr.readlines()
-        ftr.close()
-        for idx_c, content in enumerate(contents):
-            if(idx_c == 0): continue
-            tmp_label = content.replace("\n", "").split(",")[0]
-            tmp_data = np.reshape(np.asarray(content.replace("\n", "").split(",")[1:]), (1, 28, 28))
-            if(self.y_tr is None):
-                self.y_tr = tmp_label
-                self.x_tr = tmp_data
-            else:
-                self.y_tr = np.append(self.y_tr, tmp_label)
-                self.x_tr = np.append(self.x_tr, tmp_data, axis=0)
+        # ftr = open("train.csv", "r")
+        # # contents = ftr.readlines()
+        # while(True):
+        #     content = ftr.readline()
+        #     if not content: break
+        #     if("pixel" in content): continue
+        #     tmp_label = content.replace("\n", "").split(",")[0]
+        #     tmp_data = np.reshape(np.asarray(content.replace("\n", "").split(",")[1:]), (1, 28, 28))
+        #     if(self.y_tr is None):
+        #         self.y_tr = tmp_label
+        #         self.x_tr = tmp_data
+        #     else:
+        #         self.y_tr = np.append(self.y_tr, tmp_label)
+        #         self.x_tr = np.append(self.x_tr, tmp_data, axis=0)
+        #         print(self.x_tr.shape, self.y_tr.shape)
+        # ftr.close()
 
         fte = open("test.csv", "r")
-        contents = fte.readlines()
-        fte.close()
-        for idx_c, content in enumerate(contents):
-            if(idx_c == 0): continue
+        # contents = fte.readlines()
+        while(True):
+            content = fte.readline()
+            if not content: break
+            if("pixel" in content): continue
             tmp_label = 0
             tmp_data = np.reshape(np.asarray(content.replace("\n", "").split(",")), (1, 28, 28))
             if(self.y_te is None):
@@ -44,6 +48,8 @@ class Dataset(object):
             else:
                 self.y_te = np.append(self.y_te, tmp_label)
                 self.x_te = np.append(self.x_te, tmp_data, axis=0)
+                print(self.x_te.shape, self.y_te.shape)
+        fte.close()
 
         self.x_tr = np.ndarray.astype(self.x_tr, np.float32)
         self.x_te = np.ndarray.astype(self.x_te, np.float32)
