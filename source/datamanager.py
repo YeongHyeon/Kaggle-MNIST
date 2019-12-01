@@ -75,7 +75,7 @@ class Dataset(object):
 
         labels_v = None
         for idx_l, label in enumerate(labels):
-            tmp_v = np.expand_dims(np.eye(self.num_class)[label], axis=0)
+            tmp_v = np.expand_dims(np.eye(self.num_class)[int(label)], axis=0)
             if(labels_v is None): labels_v = tmp_v
             else: labels_v = np.append(labels_v, tmp_v, axis=0)
 
