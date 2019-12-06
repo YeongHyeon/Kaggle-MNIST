@@ -60,6 +60,7 @@ def test(sess, saver, neuralnet, dataset, batch_size):
         confusion_matrix[label, logit] += 1
 
         fsubmit.write("%d,%d\n" %(cntid, logit))
+        cntid += 1
 
         if(terminator): break
     fsubmit.close()
