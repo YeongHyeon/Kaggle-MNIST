@@ -60,7 +60,7 @@ class Dataset(object):
         except: self.channel = 1
 
         self.min_val, self.max_val = x_sample.min(), x_sample.max()
-        self.num_class = (y_te.max()+1)
+        self.num_class = 10
 
         print("Information of data")
         print("Shape  Height: %d, Width: %d, Channel: %d" %(self.height, self.width, self.channel))
